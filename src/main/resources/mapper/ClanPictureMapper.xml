@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlm.imp.mapper.ClanPictureMapper" >
+  <resultMap id="BaseResultMap" type="com.dlm.imp.pojo.ClanPicture" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="volume_id" property="volumeId" jdbcType="INTEGER" />
+    <result column="picture_name" property="pictureName" jdbcType="VARCHAR" />
+    <result column="picture_address" property="pictureAddress" jdbcType="VARCHAR" />
+    <result column="picture_no" property="pictureNo" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, volume_id, picture_name, picture_address, picture_no, status, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dlm.imp.pojo.ClanPictureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from clan_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from clan_picture
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from clan_picture
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dlm.imp.pojo.ClanPicture" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into clan_picture (volume_id, picture_name, picture_address, 
+      picture_no, status, create_time, 
+      update_time)
+    values (#{volumeId,jdbcType=INTEGER}, #{pictureName,jdbcType=VARCHAR}, #{pictureAddress,jdbcType=VARCHAR}, 
+      #{pictureNo,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dlm.imp.pojo.ClanPicture" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into clan_picture
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="volumeId != null" >
+        volume_id,
+      </if>
+      <if test="pictureName != null" >
+        picture_name,
+      </if>
+      <if test="pictureAddress != null" >
+        picture_address,
+      </if>
+      <if test="pictureNo != null" >
+        picture_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="volumeId != null" >
+        #{volumeId,jdbcType=INTEGER},
+      </if>
+      <if test="pictureName != null" >
+        #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureAddress != null" >
+        #{pictureAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureNo != null" >
+        #{pictureNo,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dlm.imp.pojo.ClanPictureExample" resultType="java.lang.Integer" >
+    select count(*) from clan_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dlm.imp.pojo.ClanPicture" >
+    update clan_picture
+    <set >
+      <if test="volumeId != null" >
+        volume_id = #{volumeId,jdbcType=INTEGER},
+      </if>
+      <if test="pictureName != null" >
+        picture_name = #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureAddress != null" >
+        picture_address = #{pictureAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureNo != null" >
+        picture_no = #{pictureNo,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dlm.imp.pojo.ClanPicture" >
+    update clan_picture
+    set volume_id = #{volumeId,jdbcType=INTEGER},
+      picture_name = #{pictureName,jdbcType=VARCHAR},
+      picture_address = #{pictureAddress,jdbcType=VARCHAR},
+      picture_no = #{pictureNo,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
